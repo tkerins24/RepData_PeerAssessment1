@@ -175,7 +175,8 @@ plot(avg_steps_per_interval,type = 'l', main = &quot;Average Daily Activity&quot
 <div id="find-out-which-time-interval-is-max-average" class="section level1">
 <h1>Find out which time interval is max average</h1>
 <pre class="r"><code>avg_steps_per_interval &lt;- data.frame(avg_steps_per_interval)
-max_interval &lt;- avg_steps_per_interval[avg_steps_per_interval $mean_steps ==     max(avg_steps_per_interval$mean_steps),]
+max_interval &lt;- avg_steps_per_interval[avg_steps_per_interval $mean_steps == 
+                                    max(avg_steps_per_interval$mean_steps),]
 print(max_interval, row.names = FALSE)</code></pre>
 <pre><code>##  interval mean_steps
 ##       835   206.1698</code></pre>
@@ -217,27 +218,8 @@ mean(imputed_steps_per_day$total_steps)</code></pre>
 <div id="comparison-of-results-between-original-and-imputed-data-sets" class="section level3">
 <h3>Comparison of results between Original and Imputed Data Sets</h3>
 <p>As you can see from the histograms and the table below both the mean and the median have increased primarily due the additional data resulting from filling in the NA values.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Steps</th>
-<th>Original</th>
-<th>Imputed</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Mean</td>
-<td>10766.19</td>
-<td>10821.21</td>
-</tr>
-<tr class="even">
-<td>Median</td>
-<td>10765</td>
-<td>11015</td>
-</tr>
-</tbody>
-</table>
+<p>Original Mean: 10766.19 Imputed Mean: 10821.21 Original Median: 10765<br />
+Imputed Median: 11015</p>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>

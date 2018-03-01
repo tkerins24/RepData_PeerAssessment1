@@ -71,7 +71,8 @@ plot(avg_steps_per_interval,type = 'l', main = "Average Daily Activity", col ="b
 #Find out which time interval is max average
 ```{r}
 avg_steps_per_interval <- data.frame(avg_steps_per_interval)
-max_interval <- avg_steps_per_interval[avg_steps_per_interval $mean_steps ==     max(avg_steps_per_interval$mean_steps),]
+max_interval <- avg_steps_per_interval[avg_steps_per_interval $mean_steps == 
+                                    max(avg_steps_per_interval$mean_steps),]
 print(max_interval, row.names = FALSE)
 
 ```
@@ -117,10 +118,10 @@ median(imputed_steps_per_day$total_steps)
 
 As you can see from the histograms and the table below both the mean and the median have increased primarily due the additional data resulting from filling in the NA values.
 
-Steps Original Imputed
------ -------- -------
-Mean   10766.19 10821.21
-Median 10765    11015
+Original Mean:  10766.19 
+Imputed Mean:   10821.21
+Original Median:   10765  
+Imputed Median:    11015
 
 ## Are there differences in activity patterns between weekdays and weekends?
 Create a day_type factor to distinguish weekdays from weekends and  
