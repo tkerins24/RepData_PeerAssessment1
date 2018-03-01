@@ -29,12 +29,14 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 
 Load the following packages
 
-```{r, message=FALSE,warning=FALSE}
+
+```r
 library(dplyr)
 library(lattice)
 ```
 Load the Activity Data file and clean the data by omitting all rows with NA in them.
-```{r}
+
+```r
 #Download activity file and unzip
 temp <- tempfile()
 download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",temp)
@@ -45,22 +47,39 @@ clean_activity <- na.omit(activity)
 ```
 
 ## What is mean total number of steps taken per day?
-```{r histogram_Original_Activity,echo = TRUE}
+
+```r
 #Sum the total number of steps/day
 steps_per_day <- clean_activity %>% group_by(date) %>% summarise(total_steps = sum(steps,na.rm = TRUE))
 
 #Plot Histogram of steps/day
 hist(steps_per_day$total_steps, main = "Histogram: Total Steps per Day", breaks = "Sturges",
      xlab = "Total Steps", col = "light grey",ylim = c(0,35))
+```
 
+![](PA1_template_files/figure-html/histogram_Original_Activity-1.png)<!-- -->
+
+```r
 #Calculate mean and median of steps/day
 mean(steps_per_day$total_steps, na.rm = TRUE)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(steps_per_day$total_steps, na.rm = TRUE)
+```
+
+```
+## [1] 10765
 ```
 
 ## What is the average daily activity pattern?
 Make a time series line plot of the average number of steps taken in each 5 minute interval (x-axis), averaged across all the days (y-axis).
-```{r time_series_mean_steps_per_day}
+
+```r
 #Calculate Average Steps per interval
 avg_steps_per_interval <- group_by(clean_activity, interval) %>%
          summarise(mean_steps = mean(steps,na.rm = TRUE))
@@ -68,23 +87,35 @@ avg_steps_per_interval <- group_by(clean_activity, interval) %>%
 plot(avg_steps_per_interval,type = 'l', main = "Average Daily Activity", col ="blue")
 ```
 
+![](PA1_template_files/figure-html/time_series_mean_steps_per_day-1.png)<!-- -->
+
 #Find out which time interval is max average
-```{r}
+
+```r
 avg_steps_per_interval <- data.frame(avg_steps_per_interval)
 max_interval <- avg_steps_per_interval[avg_steps_per_interval $mean_steps ==     max(avg_steps_per_interval$mean_steps),]
 print(max_interval, row.names = FALSE)
+```
 
+```
+##  interval mean_steps
+##       835   206.1698
 ```
 
 ## Imputing missing values
 Find number of rows that contain NA
-```{r}
+
+```r
 na_activity <- subset(activity, is.na(steps))
 nrow(na_activity)
 ```
-The strategy I'm using to fill in the missing values is to first calculate a new dataset of mean steps per day by interval using the cleaned version of the original dataset (all NA removed). This new dataset will then be merged with the original dataset to replace any intervals that are NA.
-```{r histogram_imputed_activity}
 
+```
+## [1] 2304
+```
+The strategy I'm using to fill in the missing values is to first calculate a new dataset of mean steps per day by interval using the cleaned version of the original dataset (all NA removed). This new dataset will then be merged with the original dataset to replace any intervals that are NA.
+
+```r
 #convert date to weekday 
 activity$day <- weekdays(as.Date(activity$date))
 
@@ -99,8 +130,8 @@ imputed_activity$imputed_steps <- ifelse(is.na(imputed_activity$steps),
 ```
 
 #Histogram of Imputed Dataset
-```{r histogram_imputed_data}
 
+```r
 #Find number of steps/day
 imputed_steps_per_day <- imputed_activity %>% 
   group_by(date) %>% summarise(total_steps = sum(imputed_steps,na.rm=TRUE))
@@ -108,10 +139,25 @@ imputed_steps_per_day <- imputed_activity %>%
 #Plot Histogram of steps/day
 hist(imputed_steps_per_day$total_steps, main = "Histogram: Total Steps per Day", breaks = "Sturges",
      xlab = "Total Steps", col = "light grey",ylim = c(0,35))
+```
 
+![](PA1_template_files/figure-html/histogram_imputed_data-1.png)<!-- -->
+
+```r
 #Calculate mean and median of steps/day
 mean(imputed_steps_per_day$total_steps)
+```
+
+```
+## [1] 10821.21
+```
+
+```r
 median(imputed_steps_per_day$total_steps)
+```
+
+```
+## [1] 11015
 ```
 ### Comparison of results between Original and Imputed Data Sets
 
@@ -127,7 +173,8 @@ Create a day_type factor to distinguish weekdays from weekends and
 make a time series panel plot of the median steps.
 As you can see from the resulting plot there is more of a spread of activity over the weekends whereas there is a ore concentrated spike of activity between the 500-1000 interval during the week. 
 
-```{r Imputed_activity_weekday_vs_weekend}
+
+```r
 #Final plot:
 
 #set up weekday/weekend factor
@@ -140,3 +187,5 @@ imputed_avg_steps <- imputed_activity %>% group_by(day_type,interval) %>%
     summarise(mean_steps = mean(steps,na.rm = TRUE))
 xyplot(mean_steps~interval|day_type,data = imputed_avg_steps, type = "l", layout = c(1,2))
 ```
+
+![](PA1_template_files/figure-html/Imputed_activity_weekday_vs_weekend-1.png)<!-- -->
