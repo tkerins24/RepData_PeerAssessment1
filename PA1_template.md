@@ -164,10 +164,15 @@ median(imputed_steps_per_day$total_steps)
 
 As you can see from the histograms and the table below both the mean and the median have increased primarily due the additional data resulting from filling in the NA values.
 
-Original Mean:  10766.19 
-Imputed Mean:   10821.21
-Original Median:   10765  
-Imputed Median:    11015
+Summary of results:
+
+*Original Mean:   10766.19
+
+*Imputed Mean:    10821.21
+
+*Original Median: 10765
+
+*Imputed Median:  11015
 
 ## Are there differences in activity patterns between weekdays and weekends?
 Create a day_type factor to distinguish weekdays from weekends and  
