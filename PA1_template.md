@@ -57,7 +57,7 @@ hist(steps_per_day$total_steps, main = "Histogram: Total Steps per Day", breaks 
      xlab = "Total Steps", col = "light grey",ylim = c(0,35))
 ```
 
-![](PA1_template_files/figure-html/histogram_Original_Activity-1.png)<!-- -->
+![](figure-html/histogram_Original_Activity-1.png)<!-- -->
 
 ```r
 #Calculate mean and median of steps/day
@@ -87,7 +87,7 @@ avg_steps_per_interval <- group_by(clean_activity, interval) %>%
 plot(avg_steps_per_interval,type = 'l', main = "Average Daily Activity", col ="blue")
 ```
 
-![](PA1_template_files/figure-html/time_series_mean_steps_per_day-1.png)<!-- -->
+![](figure-html/time_series_mean_steps_per_day-1.png)<!-- -->
 
 #Find out which time interval is max average
 
@@ -142,7 +142,7 @@ hist(imputed_steps_per_day$total_steps, main = "Histogram: Total Steps per Day",
      xlab = "Total Steps", col = "light grey",ylim = c(0,35))
 ```
 
-![](PA1_template_files/figure-html/histogram_imputed_data-1.png)<!-- -->
+![](figure-html/histogram_imputed_data-1.png)<!-- -->
 
 ```r
 #Calculate mean and median of steps/day
@@ -194,4 +194,4 @@ imputed_avg_steps <- imputed_activity %>% group_by(day_type,interval) %>%
 xyplot(mean_steps~interval|day_type,data = imputed_avg_steps, type = "l", layout = c(1,2))
 ```
 
-![](PA1_template_files/figure-html/Imputed_activity_weekday_vs_weekend-1.png)<!-- -->
+![](figure-html/Imputed_activity_weekday_vs_weekend-1.png)<!-- -->
